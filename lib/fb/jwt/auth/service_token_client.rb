@@ -25,9 +25,10 @@ class Fb::Jwt::Auth::ServiceTokenClient
 
     unless response.code.to_i == 200
       raise ServiceTokenCacheError.new(
-        "Unexpected response code\n" \
-        "Response code: #{response.code} => Response body: #{response.body}"
-      )
+              "Unexpected response code\n" \
+              "Response code: #{response.code} => Response body: #{response.body},
+response.to_s: #{response.to_s}"
+            )
     end
 
     Base64.strict_decode64(JSON.parse(response.body).fetch('token'))
@@ -42,6 +43,9 @@ class Fb::Jwt::Auth::ServiceTokenClient
   attr_reader :ignore_cache
 
   def public_key_uri
+    logger = Logger.new(STDOUT)
+    logger.info "public_key_uri: #{version_url}#{query_param}"
+    root_url = "https://editor-service-token-cache.preprod.forms.grid.civilservice.gov.uk"
     URI.join(root_url, "#{version_url}#{query_param}")
   end
 

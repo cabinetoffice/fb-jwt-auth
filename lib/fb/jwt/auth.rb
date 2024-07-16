@@ -48,6 +48,8 @@ module Fb
 
         application_details = find_application_info
 
+        @logger.info "=====> verify!, application_details: #{application_details}"
+
         begin
           payload, _header = retrieve_and_decode_public_key(application_details)
         rescue StandardError => e
@@ -72,6 +74,7 @@ module Fb
       end
 
       def retrieve_and_decode_public_key(application_details)
+        @logger.info "====> retrieve_and_decode_public_key: #{application_details}"
         hmac_secret = public_key(application_details)
         decode(hmac_secret: hmac_secret)
       rescue JWT::VerificationError
