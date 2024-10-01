@@ -45,7 +45,6 @@ response.to_s: #{response.to_s}"
   def public_key_uri
     logger = Logger.new(STDOUT)
     logger.info "public_key_uri: #{version_url}#{query_param}"
-    root_url = "https://editor-service-token-cache.preprod.forms.grid.civilservice.gov.uk"
     URI.join(root_url, "#{version_url}#{query_param}")
   end
 
