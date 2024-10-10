@@ -108,7 +108,7 @@ module Fb
 
       def public_key(attributes)
         OpenSSL::PKey::RSA.new(
-          ServiceTokenClient.new(**attributes).public_key
+          ServiceTokenClient.new(**attributes).public_key.gsub('\\n', "\n")
         )
       end
     end
